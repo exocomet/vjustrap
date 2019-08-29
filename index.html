@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vuejs - Form Input Bindings</title>
+    <style>
+        pre {
+            background-color: antiquewhite;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Vue forms</h1>
+            <p class="lead">Basic form input handling with Vue. And Bootstrap 4 styling.</p>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="app" class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputText" class="col-sm-2 col-form-label">Text</label>
+                    <div class="col-sm-10">
+                        <input id="inputText" class="form-control" v-model="text">
+                    </div>
+                    <!-- <span>{{text}}</span> -->
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Textarea</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" v-model="textArea"></textarea>
+                    </div>
+                    <span>{{textArea}}</span>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Slider</label>
+                    <div class="col-sm-8">
+                        <input class="form-control"
+                            type="range"
+                            v-model.number="range"
+                            v-bind:min=rangeMin max="100">
+                    </div>
+                    <div class="col-sm-2">
+                        <input class="form-control" v-model.number="range">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Calculate</label>
+                    <div class="col-sm-4">
+                        <button class="btn btn-primary" @click="performCalculation(range)">{{selectedOperator.title}}</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Result</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" v-model.number="numeric" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Radio</label>
+                    <div class="col-sm-10">
+                        <template v-for="item in radioStuff">
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                    type="radio"
+                                    :id="item"
+                                    :value="item"
+                                    name="item"
+                                    v-model="selectedRadio">
+                                <label class="form-check-label" :for="item">{{item}}</label>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="selectops">Operators</label>
+                    <div class="col-sm-10">
+                        <select id="selectops" class="form-control" v-model="selectedOperator">
+                            <option
+                                v-for="item in operators"
+                                v-bind:value="item"
+                                :id="item.id"
+                            >{{item.title}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="multiselect">Multi select</label>
+                    <div class="col-sm-10">
+                        <select id="multiselect" class="form-control" v-model="selectedArray" multiple>
+                            <option v-for="item in selectStuff">{{item}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Some other select</label>
+                    <div class="col-sm-10">
+                        <select v-model="selectedStuff">
+                            <option v-for="item in selectStuff">{{item}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Toggle boolean</label>
+                    <div class="col-sm-10">
+                        <input type="checkbox" v-model="toggleBoolean">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Toggle value</label>
+                    <div class="col-sm-10">
+                        <input
+                            type="checkbox"
+                            v-model="toggleValue"
+                            true-value="YAY!!"
+                            false-value="NAY!!">
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12">
+                        <ul>
+                            <template v-for="item in radioStuff">
+                                <li>{{ item }}</li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <pre><code>{{dataModel}}</code></pre>
+                    </div>
+                </div>
+                <div class="row">
+                    <ul>
+                        <li>
+                            <a href="https://jsfiddle.net/mani04/3uznmk72/">https://jsfiddle.net/mani04/3uznmk72/</a>
+                        </li>
+                        <li>
+                            <a href="https://jsfiddle.net/djibe89/at2cv9q1/">https://jsfiddle.net/djibe89/at2cv9q1/</a>
+                        </li>
+                        <li>
+                            <a href="https://jsfiddle.net/lthr/jze8gqb1/">https://jsfiddle.net/lthr/jze8gqb1/</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="build/bundle.js"></script>
+</body>
+</html>

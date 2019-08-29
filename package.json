@@ -1,0 +1,23 @@
+{
+  "name": "vjustrap",
+  "version": "1.0.0",
+  "description": "Vue form handling demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exocomet/vjustrap.git"
+  },
+  "author": "Alexander Kutterer (http://kutterer.at/)",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup-plugin-vue": "^5.0.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "dependencies": {
+    "vue": "^2.6.10"
+  }
+}
