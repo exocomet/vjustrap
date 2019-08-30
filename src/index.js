@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import highlightJSON from './prettyjson.js'
 
 const operators = [
     {id: 'add', title: 'Add'},
@@ -39,7 +40,7 @@ var app = new Vue({
             } else if (this.selectedOperator.id == 'subtract') {
                 this.subtract(value);
             }
-        }
+        },
     },
     mounted: function() {
         console.log("Look into my eyes you'll see who I am");
@@ -48,5 +49,8 @@ var app = new Vue({
         dataModel: function () {
             return JSON.stringify(this.$data, null, 2);
         },
+        formattedDataModel: function() {
+            return highlightJSON(this.dataModel);;
+        }
     }
 });
