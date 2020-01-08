@@ -7,6 +7,7 @@ Vue form input and Bootstrap 4 demo
 git clone https://github.com/exocomet/vjustrap.git
 cd vjustrap
 npm install
+npm install --global rollup
 npm run build
 ```
 
